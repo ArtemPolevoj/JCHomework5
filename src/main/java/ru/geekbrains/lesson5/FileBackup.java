@@ -1,6 +1,6 @@
 package ru.geekbrains.lesson5;
 
-import java.io.File;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -26,9 +26,22 @@ public class FileBackup {
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile()) {
-                        File newFile = new File(dirCopy.getName() + "\\" + file.getName());
+                        File newFile = new File(dirCopy.getName() +
+                                "\\" + file.getName());
                         if (!newFile.exists()) {
-                            Files.copy(file.toPath(), newFile.toPath());
+                            // Files.copy(file.toPath(), newFile.toPath());
+                            try (OutputStream outputStream =
+                                         new BufferedOutputStream(
+                                                 new FileOutputStream(newFile))) {
+                                int c;
+                                try (InputStream inputStream =
+                                             new BufferedInputStream(
+                                                     new FileInputStream(file))) {
+                                    while ((c = inputStream.read()) != -1) {
+                                        outputStream.write(c);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
