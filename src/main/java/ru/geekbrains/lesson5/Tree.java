@@ -41,7 +41,8 @@ public class Tree {
             if (value.isDirectory()) {
                 print(value, indent, subDirTotal == ++subDirCounter);
             } else {
-                print(value, indent, subFileTotal == ++subFaleCounter);
+                print(value, indent, subFileTotal == ++subFaleCounter
+                        && subDirTotal == subDirCounter);
             }
         }
     }
