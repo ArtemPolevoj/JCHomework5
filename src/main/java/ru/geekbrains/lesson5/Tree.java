@@ -11,13 +11,12 @@ public class Tree {
         print(new File("."), "", true);
     }
 
-    static void print(File file, String indent, boolean isLast){
+    static void print(File file, String indent, boolean isLast) {
         System.out.print(indent);
-        if (isLast){
+        if (isLast) {
             System.out.print("└─");
             indent += "  ";
-        }
-        else {
+        } else {
             System.out.print("├─");
             indent += "│ ";
         }
@@ -28,17 +27,23 @@ public class Tree {
             return;
 
         int subDirTotal = 0;
-        for (int i = 0; i < files.length; i++){
-            if (files[i].isDirectory())
+        int subFileTotal = 0;
+        for (File value : files) {
+            if (value.isDirectory()){
                 subDirTotal++;
+            } else {
+                subFileTotal++;
+            }
         }
-
         int subDirCounter = 0;
-        for (int i = 0; i < files.length; i++){
-            if (files[i].isDirectory()){
-                print(files[i], indent, subDirTotal == ++subDirCounter);
+        int subFaleCounter = 0;
+        for (File value : files) {
+            if (value.isDirectory()) {
+                print(value, indent, subDirTotal == ++subDirCounter);
+            } else {
+                print(value, indent, subFileTotal == ++subFaleCounter
+                        && subDirTotal == subDirCounter);
             }
         }
     }
-
 }
